@@ -27,10 +27,10 @@ import (
 	"os"
 	"path/filepath"
 
+	"github.com/GoTrellium/integram"
 	t "github.com/integram-org/trello/api"
 	"github.com/jinzhu/now"
 	"github.com/mrjones/oauth"
-	"github.com/requilence/integram"
 	"github.com/requilence/decent"
 	tg "github.com/requilence/telegram-bot-api"
 )
@@ -663,7 +663,7 @@ func afterBoardIntegratedActionSelected(c *integram.Context) error {
 
 }
 
-func authWasRevokedMessage(c *integram.Context){
+func authWasRevokedMessage(c *integram.Context) {
 	c.User.ResetOAuthToken()
 	c.NewMessage().EnableAntiFlood().SetTextFmt("Looks like you have revoked the Integram access. In order to use me you need to authorize again: %s", oauthRedirectURL(c)).SetChat(c.User.ID).Send()
 }
@@ -674,13 +674,13 @@ func subscribeBoard(c *integram.Context, b *t.Board, chatID int64) error {
 	_, err := api(c).Request("POST", "tokens/"+c.User.OAuthToken()+"/webhooks", nil, qp)
 	webhook := webhookInfo{}
 	if err != nil {
-		if strings.Contains(err.Error(),"already exists") {
+		if strings.Contains(err.Error(), "already exists") {
 			webhook, err = existsWebhookByBoard(c, b.Id)
 			if err != nil {
 				c.Log().WithError(err).WithField("boardID", b.Id).Error("Received ErrorWebhookExists but can't refetch")
 				return err
 			}
-		} else if strings.Contains(err.Error(), "401 Unauthorized"){
+		} else if strings.Contains(err.Error(), "401 Unauthorized") {
 			authWasRevokedMessage(c)
 			c.User.SetAfterAuthAction(subscribeBoard, b, chatID)
 			return nil
@@ -690,7 +690,7 @@ func subscribeBoard(c *integram.Context, b *t.Board, chatID int64) error {
 	} else {
 
 		webhook, err = existsWebhookByBoard(c, b.Id)
-		if err != nil{
+		if err != nil {
 			return err
 		}
 
@@ -2297,7 +2297,7 @@ func inlineQueryHandler(c *integram.Context) error {
 				InputMessageContent: tg.InputTextMessageContent{
 					ParseMode:             "HTML",
 					DisableWebPagePreview: false,
-					Text: card.Name + "\n\n<b>" + list.Name + " • " + board.Name + "</b>"},
+					Text:                  card.Name + "\n\n<b>" + list.Name + " • " + board.Name + "</b>"},
 				ReplyMarkup: &tg.InlineKeyboardMarkup{
 					InlineKeyboard: [][]tg.InlineKeyboardButton{
 						{
@@ -2338,7 +2338,7 @@ func inlineQueryHandler(c *integram.Context) error {
 						InputMessageContent: tg.InputTextMessageContent{
 							ParseMode:             "HTML",
 							DisableWebPagePreview: false,
-							Text: c.InlineQuery.Query + "\n\n<b>" + lists[li].Name + " • " + boards[bi].Name + "</b>"},
+							Text:                  c.InlineQuery.Query + "\n\n<b>" + lists[li].Name + " • " + boards[bi].Name + "</b>"},
 						ReplyMarkup: &tg.InlineKeyboardMarkup{
 							InlineKeyboard: [][]tg.InlineKeyboardButton{
 								{
@@ -2350,7 +2350,7 @@ func inlineQueryHandler(c *integram.Context) error {
 			}
 		}
 	}
-	return c.AnswerInlineQueryWithResults(res, 10, true,"")
+	return c.AnswerInlineQueryWithResults(res, 10, true, "")
 }
 func newMessageHandler(c *integram.Context) error {
 	u, _ := iurl.Parse("https://trello.com")
@@ -2467,6 +2467,6 @@ func newMessageHandler(c *integram.Context) error {
 	return nil
 }
 
-func oauthRedirectURL(c *integram.Context) string{
+func oauthRedirectURL(c *integram.Context) string {
 	return fmt.Sprintf("%s/tz?r=%s", integram.Config.BaseURL, url.QueryEscape(fmt.Sprintf("/oauth1/%s/%s", c.ServiceName, c.User.AuthTempToken())))
 }

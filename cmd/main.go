@@ -1,12 +1,12 @@
 package main
 
 import (
-	"github.com/requilence/integram"
-	"github.com/integram-org/trello"
+	"github.com/GoTrellium/integram"
+	"github.com/GoTrellium/trello"
 	"github.com/kelseyhightower/envconfig"
 )
 
-func main(){
+func main() {
 	var cfg trello.Config
 	envconfig.MustProcess("TRELLO", &cfg)
 

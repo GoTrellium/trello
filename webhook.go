@@ -11,11 +11,11 @@ import (
 	"strings"
 	"time"
 
-	"github.com/requilence/integram"
-	"github.com/requilence/decent"
+	"github.com/GoTrellium/integram"
 	t "github.com/integram-org/trello/api"
-	iurl "github.com/requilence/url"
+	"github.com/requilence/decent"
 	tg "github.com/requilence/telegram-bot-api"
+	iurl "github.com/requilence/url"
 	log "github.com/sirupsen/logrus"
 	"gopkg.in/mgo.v2/bson"
 )
@@ -352,7 +352,6 @@ func webhookHandler(c *integram.Context, wc *integram.WebhookContext) (err error
 				return
 			}
 		}
-
 
 		if !bs.Filter.Labeled {
 			return

@@ -135,7 +135,7 @@ func TestMemberListCardsChecklists(t *testing.T) {
 								t.Errorf("card request: %s", err)
 							} else {
 								for _, card := range cards {
-									if checklists, err := card.Checklists(); err != nil {
+									if checklists, err := card.GetChecklists(); err != nil {
 										t.Errorf("checklists request: %s", err)
 									} else {
 										for _, c := range checklists {
