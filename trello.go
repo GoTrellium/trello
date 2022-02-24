@@ -28,7 +28,7 @@ import (
 	"path/filepath"
 
 	"github.com/GoTrellium/integram"
-	t "github.com/integram-org/trello/api"
+	t "github.com/GoTrellium/trello/api"
 	"github.com/jinzhu/now"
 	"github.com/mrjones/oauth"
 	"github.com/requilence/decent"

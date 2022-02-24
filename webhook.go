@@ -12,7 +12,7 @@ import (
 	"time"
 
 	"github.com/GoTrellium/integram"
-	t "github.com/integram-org/trello/api"
+	t "github.com/GoTrellium/trello/api"
 	"github.com/requilence/decent"
 	tg "github.com/requilence/telegram-bot-api"
 	iurl "github.com/requilence/url"
